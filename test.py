@@ -9,10 +9,11 @@ def f(x):
     return x
 
 
-inp = lay.Input((10,))
-a = EdgeConv(f, next_neighbors=3)(inp)
+points = lay.Input((10, 5))
+feats = lay.Input((10, 5))
+a = EdgeConv(f, next_neighbors=3)([points, feats])
 y = EdgeConv(f, next_neighbors=3)(a)
 out = EdgeConv(f, next_neighbors=3)(y)
 
-model = keras.models.Model(inp, out)
+model = keras.models.Model([points, feats], out)
 model.summary()
