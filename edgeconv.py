@@ -100,8 +100,8 @@ class EdgeConv(lay.Layer):
 
         if type(self.kernel_func) != keras.models.Model:  # for not wrapping model around model when loading model
             x = lay.Input((f_shape.as_list()[-1] * 2,))
-            a = lay.Reshape((f_shape.as_list()[-1], 2))(x)
-            x1, x2 = SplitLayer(n_splits=2, split_axis=-1)(a)  # (2, C)
+            a = lay.Reshape((2, f_shape.as_list()[-1]))(x)
+            x1, x2 = SplitLayer(n_splits=2, split_axis=-2)(a)  # (2, C)
             x1 = lay.Reshape((f_shape.as_list()[-1],))(x1)
             x2 = lay.Reshape((f_shape.as_list()[-1],))(x2)
             y = self.kernel_func([x1, x2])
