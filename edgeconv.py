@@ -42,8 +42,8 @@ class SplitLayer(lay.Layer):
 
     def compute_output_shape(self, input_shape):
         sub_tensor_shape = list(input_shape)
-        num_channels = sub_tensor_shape[-1]
-        sub_tensor_shape[-1] = int(num_channels / self.n_splits)
+        num_channels = sub_tensor_shape[self.split_axis]
+        sub_tensor_shape[self.split_axis] = int(num_channels / self.n_splits)
         sub_tensor_shape = tuple(sub_tensor_shape)
         list_of_output_shape = [sub_tensor_shape] * self.n_splits
         return list_of_output_shape
