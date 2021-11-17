@@ -13,6 +13,7 @@ def f(data):
     return x
 
 
+# Test EdgeConv initialization, training, saving and loading
 points = lay.Input((10, 6))
 feats = lay.Input((10, 6))
 a = edgeconv.EdgeConv(f, next_neighbors=3)([points, feats])
