@@ -114,6 +114,7 @@ class KNN(keras.layers.Layer):
     k Number of nearest neighbors
     stack_axis Axis to stack the features
     """
+
     @staticmethod
     def batch_distance_matrix_general_large_d(a, b):
         """ Calculate elements-wise distance between entries in two tensors for more than 4 dimensions"""
@@ -266,7 +267,10 @@ class EdgeConv(keras.layers.Layer):
                     else:
                         y = self.kernel_func(x)
                     self.kernel_func = keras.models.Model(x, y)
-            self.distributed_kernel = keras.layers.TimeDistributed(keras.layers.TimeDistributed(self.kernel_func))
+            self.distributed_kernel = keras.layers.TimeDistributed(keras.layers.TimeDistributed(
+                self.kernel_func,
+                name=self.name + '_Nodes'),
+                name=self.name + '_Batch')
 
     def call(self, inputs, **kwargs):
         with tf.name_scope(self.name):
